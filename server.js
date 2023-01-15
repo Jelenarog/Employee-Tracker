@@ -36,8 +36,8 @@ app.use(express.json());
 
 
 //TO DO id added to dept picked insert into dept table
-const init = async() => {
- await inquirer
+const init = () => {
+  inquirer
     .prompt([
       {
         type: "list",
@@ -56,49 +56,35 @@ const init = async() => {
     ]
     )
 
-        .then(({ action }) => {
-   let result;
+        .then( async ({ action }) => {
+
       if (action){
         switch (action){
           case "View all departments":
-            viewDepartments();
-           return result;
+            const [rows] = await viewDepartments();
+            console.table(rows)
+            break;
           case  "View all roles":
-            viewRoles();
-            return result;
-           
+           const [roles] = await viewRoles();
+           console.table(roles);
+            break;
           case  "View all employees":
-              viewEmployees();
-              return result;
+             const [employee] = await viewEmployees();
+              break;
+
           case  "Add a department":
-              addDepartmentMenu();
-              return result;
-            
+              await addDepartmentMenu();
+    
+              break;
           case  "Add a role":
-              addRoleMenu();
-              return result;           
+              await addRoleMenu();    
+              break;
         }
-        
-     
+
+        init();
       }})
     };
-//       if (action === "View all departments") {
-//        // viewDepartments();
-//       } else if (action === "View all roles") {
-//         viewRoles();
-//       } else if (action === "View all employees") {
-//         allEmployees();
-//       } else if (action === "Add a department") {
-//         addDepartment();
-//       } else if (action === "Add a role") {
-//         addRoleMenu();
-//       }
-//         else if (action === "Add an employee") {
-//          addEmployee();
-//       }
-      
-//     });
-// }
+
 init();
 
 

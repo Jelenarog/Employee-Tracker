@@ -26,10 +26,11 @@ const addRoleMenu = async () =>{
           },
         ])
        
-       const deptId = await findDeptByName(department);
-  console.log(deptId);
-        // await db.promise().query(`INSERT INTO roles VALUES(?, ?, ?, ?)`,
-        //      [title, salary, department ])
+       //const deptId = await findDeptByName(department);
+ // console.log(deptId);
+ console.log("department", department)
+        return db.promise().query(`INSERT INTO roles (title, salary, department_id) VALUES(?, ?, ?)`,
+             [title, salary, department ])
             
 };
 
@@ -39,7 +40,7 @@ const addRoleMenu = async () =>{
 
 //if user wants to add department insert that value into department table
 const addDepartmentMenu = async() => {
-  await inquirer
+  return inquirer
     .prompt([
       {
         type: "input",
@@ -47,21 +48,14 @@ const addDepartmentMenu = async() => {
         name: "department",
       },
     ])
-   // .then((answers) => {
-     db.query(
-      `INSERT INTO department VALUES(?,?)`, [department],
-        //[answers.id, answers.department],
-        (err, result) => {
-          if (err) {
-            console.log(err);
-          }
-          console.log(`Added ${department} to the database.`);
+    .then(answers => {
+      return db.promise().query(
+        `INSERT INTO department VALUES(?,?)`, [answers.id,answers.department])
+        .then(() => { console.log(`Added ${answers.department} to the database.`);})
+    })
 
-     
-        }
-      );
-     init();
     }//);
+    
 //};
 
 
