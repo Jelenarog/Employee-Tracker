@@ -1,10 +1,11 @@
 const inquirer = require("inquirer");
-const {deptList, findDeptByName } = require("../lib/department");
+const {deptList} = require("../lib/department");
 const db = require("../db/connection");
-const deptQuery = `INSERT INTO department VALUES(?,?)`;
+const deptQuery = `INSERT INTO roles (title, salary, department_id) VALUES(?, ?, ?)`;
 
+//add new role to DB 
 const addRoleMenu = async () =>{
-   
+//get list of existing department names and their ID from db
  const getDept = await deptList();
  
  const {title, salary, department} = await inquirer.prompt([
@@ -25,18 +26,9 @@ const addRoleMenu = async () =>{
             choices: getDept,
           },
         ])
-       
-       //const deptId = await findDeptByName(department);
- // console.log(deptId);
- console.log("department", department)
-        return db.promise().query(`INSERT INTO roles (title, salary, department_id) VALUES(?, ?, ?)`,
-             [title, salary, department ])
-            
+        //add new role into DB with values passed by user
+        return db.promise().query(deptQuery,[title, salary, department ])      
 };
-
-
-
-
 
 //if user wants to add department insert that value into department table
 const addDepartmentMenu = async() => {
@@ -54,9 +46,9 @@ const addDepartmentMenu = async() => {
         .then(() => { console.log(`Added ${answers.department} to the database.`);})
     })
 
-    }//);
+    }
     
-//};
+
 
 
 

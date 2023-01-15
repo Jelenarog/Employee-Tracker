@@ -34,7 +34,6 @@ app.use(express.json());
 //addRoleMenu();
 
 
-
 //TO DO id added to dept picked insert into dept table
 const init = () => {
   inquirer
@@ -69,12 +68,13 @@ const init = () => {
            console.table(roles);
             break;
           case  "View all employees":
+            viewEmployees();
              const [employee] = await viewEmployees();
+             console.table (employee);
               break;
 
           case  "Add a department":
               await addDepartmentMenu();
-    
               break;
           case  "Add a role":
               await addRoleMenu();    
@@ -83,9 +83,12 @@ const init = () => {
 
         init();
       }})
+      .catch(error => {
+        throw error;
+    });
     };
 
-init();
+ init();
 
 
 // Default response for any other request (Not Found)
