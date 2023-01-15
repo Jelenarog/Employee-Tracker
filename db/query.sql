@@ -42,3 +42,7 @@ SELECT * FROM roles
 WHERE salary = 80000;
 
    select * from department;
+
+
+
+SELECT id FROM department WHERE name = "Sales";
