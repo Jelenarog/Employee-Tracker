@@ -1,12 +1,11 @@
-// get the client
+// connection with DB
 const db = require("./db/connection");
-const cTable = require("console.table");
+const cTable = require("console.table");//display to the console in a tabular form
 const inquirer = require("inquirer");
 require("dotenv").config(); //global variable
 const express = require("express");
 const {viewRoles, viewDepartments, viewEmployees } = require("./lib/display");
-const {deptList, findDeptByName }= require("./lib/department");
-const {addRoleMenu, addDepartmentMenu } = require("./src/menu");
+const {addRoleMenu, addDepartmentMenu, addEmployeeMenu, updateEmployeeRole, updateEmployeeManager } = require("./src/menu");
 
 const PORT = process.env.PORT || 3001;
 const app = express();
@@ -16,25 +15,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 
-
-  // db.query(
-  //   ` SELECT id FROM department WHERE department.name = Sales `,
-  //   (err, result) => {
-  //     if (err) {
-  //       console.log(err);
-  //     }
-  //     console.table(result);
-  //     console.log(result);
-    
-  //   }
-  // );
-
-
-
-//addRoleMenu();
-
-
-//TO DO id added to dept picked insert into dept table
+//Starter init function
 const init = () => {
   inquirer
     .prompt([
@@ -50,6 +31,8 @@ const init = () => {
           "Add a role",
           "Add an employee",
           "Update an employee role",
+          "Update employee's manager",
+          "Quit",
         ],
       },
     ]
@@ -72,13 +55,23 @@ const init = () => {
              const [employee] = await viewEmployees();
              console.table (employee);
               break;
-
           case  "Add a department":
               await addDepartmentMenu();
               break;
           case  "Add a role":
               await addRoleMenu();    
               break;
+          case  "Add an employee":
+              await addEmployeeMenu();    
+              break;  
+          case  "Update an employee role":
+              await updateEmployeeRole();    
+              break; 
+          case  "Update employee's manager":
+                await updateEmployeeManager();    
+              break; 
+          case "Quit":
+            process.exit();
         }
 
         init();
