@@ -4,8 +4,8 @@ const cTable = require("console.table");//display to the console in a tabular fo
 const inquirer = require("inquirer");
 require("dotenv").config(); //global variable
 const express = require("express");
-const {viewRoles, viewDepartments, viewEmployees } = require("./lib/display");
-const {addRoleMenu, addDepartmentMenu, addEmployeeMenu, updateEmployeeRole, updateEmployeeManager } = require("./src/menu");
+const {viewRoles, viewDepartments, viewEmployees, viewEmployeesByManager, viewEmployeesByDepartment ,viewBudgetByDepartment } = require("./lib/display");
+const {addRoleMenu, addDepartmentMenu, addEmployeeMenu, updateEmployeeRole, updateEmployeeManager} = require("./src/menu");
 
 const PORT = process.env.PORT || 3001;
 const app = express();
@@ -32,6 +32,9 @@ const init = () => {
           "Add an employee",
           "Update an employee role",
           "Update employee's manager",
+          "View employees by manager",
+          "View employees by department",
+          "View utilized budget by department",
           "Quit",
         ],
       },
@@ -68,8 +71,20 @@ const init = () => {
               await updateEmployeeRole();    
               break; 
           case  "Update employee's manager":
-                await updateEmployeeManager();    
-              break; 
+             await updateEmployeeManager();    
+             break; 
+          case  "View employees by manager":
+            const [byManager] = await viewEmployeesByManager();    
+            console.table(byManager);
+            break; 
+          case  "View employees by department":
+            const [byDepartment] = await viewEmployeesByDepartment();    
+            console.table(byDepartment);
+            break; 
+           case  "View utilized budget by department":
+            const [viewBudget] = await viewBudgetByDepartment();    
+            console.table(viewBudget);
+            break; 
           case "Quit":
             process.exit();
         }

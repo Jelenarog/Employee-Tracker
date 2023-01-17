@@ -124,7 +124,6 @@ const updateEmployeeRole = async () => {
 //function to update an Employee Manager in existing db
 const updateEmployeeManager = async () => {
   const getEmployeeList = await employeeList();
-  const getManagerList = await managerList();
   const {firstName, managerId} = await
   inquirer
     .prompt([
@@ -143,10 +142,7 @@ const updateEmployeeManager = async () => {
   
       },
     ])
-    console.log(firstName);
-    console.log(managerId);
       return db.promise().query(updateEmployeeManagerQuery,[managerId, firstName])
-     
           }
 
   
