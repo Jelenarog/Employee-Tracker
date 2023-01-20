@@ -1,6 +1,6 @@
 // connection with DB
 const db = require("./db/connection");
-const cTable = require("console.table");//display to the console in a tabular form
+require("console.table");//display to the console in a tabular form
 const inquirer = require("inquirer");
 require("dotenv").config(); //global variable
 const express = require("express");
