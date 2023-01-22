@@ -88,8 +88,7 @@ const addEmployeeMenu = async () => {
       },
     ])
       return db.promise().query(employeeQuery,[firstName, lastName, roleId, managerId])
-      
-     // .then()=>{console.log(`Added ${answers.first_name} to the database.`)}
+
             
           }
 
@@ -117,7 +116,7 @@ const updateEmployeeRole = async () => {
   
       },
     ])
-      return db.promise().query(updateEmployeeQuery,[roleId, firstName])
+      return db.promise().query(updateEmployeeRoleQuery,[roleId, firstName])
      
           }
 
